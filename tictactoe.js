@@ -1,33 +1,37 @@
-const Square = ({ id }) => {
+const Square = ({ id, player }) => {
   const [color, setColor] = React.useState("green");
-  const palet = ["indigo", "red", "green"];
-  const getRandColor = () => {
-    return palet[Math.floor(Math.random() * 3)];
-  };
+
   return (
-    <button
-      onClick={(e) => {
-        setColor(getRandColor());
-        e.target.style.background = color;
-      }}
-    >
-      <h1>{id}</h1>
+    <button id={id}>
+      <h1>{player}</h1>
     </button>
   );
 };
 
 const Board = () => {
   const [player, setPlayer] = React.useState(0);
+  const [mounted, setMounted] = React.useState(true);
+  const [random, setRandom] = React.useState(0);
   let status = `Player ${player}`;
+  const toggle = () => {
+    setMounted(!mounted);
+  };
+  const reRender = () => {
+    setRandom(Math.random());
+  };
   function renderSquare(i) {
-    return <Square id={i}></Square>;
+    return <Square id={i} player={player}></Square>;
   }
   return (
     <div className="game-board">
       <div className="grid-row">
-        {renderSquare(0)} {renderSquare(1)} {renderSquare(2)}
+        {mounted && renderSquare(0)}
+        {mounted && renderSquare(1)}
+        {mounted && renderSquare(2)}
       </div>
       <div id="info">
+        <button onClick={toggle}>Mount/UnMount</button>
+        <button onClick={reRender}>Re-render</button>
         <h1>{status}</h1>
       </div>
     </div>
