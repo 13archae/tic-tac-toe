@@ -1,8 +1,21 @@
 const Square = ({ id, player }) => {
   const [color, setColor] = React.useState("green");
+  const palet = ["blue", "red", "green"];
+  const randomColor = () => palet[Math.floor(Math.random * 3)];
+
+  React.useEffect(() => {
+    console.log(`Render ${id}`);
+    return () => console.log(`unmounting square ${id}`);
+  });
 
   return (
-    <button id={id}>
+    <button
+      id={id}
+      onClick={(e) => {
+        setColor(randomColor());
+        e.target.style.background = color;
+      }}
+    >
       <h1>{player}</h1>
     </button>
   );
