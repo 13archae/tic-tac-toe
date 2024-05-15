@@ -1,5 +1,7 @@
 const Square = ({ id, player, newState }) => {
   const [color, setColor] = React.useState("green");
+  const [status, setStatus] = React.useState(null);
+  const xo = ["O", "X"];
   const palet = ["blue", "red", "green"];
   const randomColor = () => {
     let chosenIndex = Math.floor(Math.random() * 3);
@@ -19,11 +21,12 @@ const Square = ({ id, player, newState }) => {
         let col = randomColor();
         setColor(col);
         console.log(`color: ${color}`);
-        newState({ id: id, color: col });
         e.target.style.background = col;
+        let nextPlayer = newState({ id: id, color: col });
+        setStatus(nextPlayer);
       }}
     >
-      <h1>{player}</h1>
+      <h1>{xo[status]}</h1>
     </button>
   );
 };
